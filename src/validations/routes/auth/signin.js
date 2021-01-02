@@ -11,4 +11,5 @@ const schema = {
     phone: Joi.string().phoneNumber({format: 'e164', strict: true}),
   }),
 };
-export default validate(schema, {keyByField: true}, {abortEarly: false});
+
+export const signin = validate(schema, {keyByField: true}, {abortEarly: false});

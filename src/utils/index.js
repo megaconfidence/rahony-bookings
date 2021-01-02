@@ -1,2 +1,3 @@
 export * from './protect';
-export {default as routeCatch} from './routecatch';
+export * from './genticket';
+export * from './routecatch';

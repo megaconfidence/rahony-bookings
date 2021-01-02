@@ -1,4 +1,3 @@
-import authRouter from './auth';
-import userRouter from './user';
-
-export {authRouter, userRouter};
+export * from './auth';
+export * from './user';
+export * from './booking';

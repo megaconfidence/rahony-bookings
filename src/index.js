@@ -2,11 +2,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import express from 'express';
-import {protect} from './utils';
 import {secrets} from './config';
 import {mongo} from './services';
 import bodyParser from 'body-parser';
-import {authRouter} from './resources';
+import {authRouter, bookingRouter} from './resources';
 
 const app = express();
 
@@ -18,7 +17,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use('/auth', authRouter);
-app.use('/api', protect);
+app.use('/api/booking', bookingRouter);
 
 app.use(({message, stack, details, statusCode}, _, res, __) => {
   return res.status(statusCode || 500).send({

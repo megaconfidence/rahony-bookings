@@ -8,4 +8,4 @@ const router = Router();
 router.route('/signin').post(routes.auth.signin, routeCatch(signin));
 router.route('/signup').post(routes.auth.signup, routeCatch(signup));
 
-export default router;
+export const authRouter = router;

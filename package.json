@@ -26,11 +26,13 @@
     "express-validation": "^3.0.6",
     "helmet": "^4.3.1",
     "ioredis": "^4.19.4",
+    "joi-objectid": "^3.0.1",
     "joi-phone-number": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.9",
     "mongoose-lean-virtuals": "^0.7.6",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.20"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

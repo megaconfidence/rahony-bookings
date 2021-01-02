@@ -5,11 +5,12 @@ const Joi = Joy.extend(joiPhone);
 
 const schema = {
   body: Joi.object({
-    lastname: Joi.string().required(),
-    firstname: Joi.string().required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().min(5).required(),
+    to: Joi.string().required(),
+    from: Joi.string().required(),
+    seats: Joi.number().min(1).required(),
+    date: Joi.date().greater('now').required(),
     phone: Joi.string().phoneNumber({format: 'e164', strict: true}).required(),
   }),
 };
-export const signup = validate(schema, {keyByField: true}, {abortEarly: false});
+
+export const create = validate(schema, {keyByField: true}, {abortEarly: false});
