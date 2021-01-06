@@ -7,13 +7,19 @@ const Booking = mongoose.Schema(
       type: String,
       required: true,
     },
-    from: {
+    name: {
       trim: true,
       type: String,
       required: true,
       lowercase: true,
     },
-    to: {
+    departure: {
+      trim: true,
+      type: String,
+      required: true,
+      lowercase: true,
+    },
+    destination: {
       trim: true,
       type: String,
       required: true,

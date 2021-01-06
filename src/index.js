@@ -1,4 +1,5 @@
 import cors from 'cors';
+import path from 'path';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import express from 'express';
@@ -16,6 +17,7 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 
+app.use('/ticket', express.static(path.join(__dirname, 'ticket')));
 app.use('/auth', authRouter);
 app.use('/api/booking', bookingRouter);
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rahony Booking Ticket</title>
+    <style>
+      h2 {
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+      }
+      table {
+        margin: 0 auto;
+        width: 600px;
+        border-collapse: collapse;
+        font-family: arial, sans-serif;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      td:first-child {
+        width: 30%;
+        font-weight: bold;
+      }
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Rahony Booking Ticket</h2>
+    <table>
+      <tr>
+        <td>Ticket ID</td>
+        <td>{{data.ticket}}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{data.name}}</td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td>{{data.phone}}</td>
+      </tr>
+      <tr>
+        <td>Seats</td>
+        <td>{{data.seats}}</td>
+      </tr>
+      <tr>
+        <td>Date</td>
+        <td>{{data.date}}</td>
+      </tr>
+      <tr>
+        <td>Departure</td>
+        <td>{{data.departure}}</td>
+      </tr>
+      <tr>
+        <td>Destination</td>
+        <td>{{data.destination}}</td>
+      </tr>
+    </table>
+  </body>
+</html>

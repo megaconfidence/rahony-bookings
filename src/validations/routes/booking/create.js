@@ -5,8 +5,9 @@ const Joi = Joy.extend(joiPhone);
 
 const schema = {
   body: Joi.object({
-    to: Joi.string().required(),
-    from: Joi.string().required(),
+    name: Joi.string().required(),
+    departure: Joi.string().required(),
+    destination: Joi.string().required(),
     seats: Joi.number().min(1).required(),
     date: Joi.date().greater('now').required(),
     phone: Joi.string().phoneNumber({format: 'e164', strict: true}).required(),

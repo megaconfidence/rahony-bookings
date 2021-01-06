@@ -1,23 +1,50 @@
+import fs from 'fs';
+import path from 'path';
 import Booking from './model';
+import pdf from 'pdf-creator-node';
+import {secrets} from '../../config';
 import {genTicket} from '../../utils';
 
 export const create = async (req, res) => {
-  const {from, to, date, seats, phone} = req.body;
+  const {departure, name, destination, date, seats, phone} = req.body;
 
   const ticket = genTicket();
 
-  const booking = await Booking.create({
-    to,
-    from,
+  const data = {
     date,
+    name,
     seats,
     phone,
     ticket,
-  });
+    departure,
+    destination,
+  };
+
+  const options = {
+    format: 'A3',
+    border: '10mm',
+    orientation: 'portrait',
+  };
+
+  const document = {
+    data: {data},
+    html: fs.readFileSync(
+      path.join(__dirname, '../../ticket/template.html'),
+      'utf-8'
+    ),
+    path: path.join(__dirname, `../../ticket/rahony-ticket-${ticket}.pdf`),
+  };
+
+  await pdf.create(document, options);
+
+  const booking = await Booking.create(data);
 
   return res.send({
     message: 'booking made successfully',
-    data: {booking},
+    data: {
+      booking,
+      pdf: secrets.domain + `/ticket/rahony-ticket-${ticket}.pdf`,
+    },
   });
 };
 
@@ -39,5 +66,19 @@ export const update = async (req, res) => {
   return res.send({
     message: 'booking updated successfully',
     data: {booking},
+  });
+};
+
+export const search = async (req, res) => {
+  const {phone = '', date = '', ticket = ''} = req.body;
+  const rgx = (pattern) => new RegExp(`.*${pattern}.*`, 'i');
+
+  const bookings = await Booking.find({
+    $or: [{date: rgx(date)}, {phone: rgx(phone)}, {ticket: rgx(ticket)}],
+  });
+
+  return res.send({
+    message: 'bookings found successfully',
+    data: {bookings},
   });
 };
