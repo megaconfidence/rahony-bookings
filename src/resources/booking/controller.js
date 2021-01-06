@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import Booking from './model';
 import pdf from 'pdf-creator-node';
-import {secrets} from '../../config';
 import {genTicket} from '../../utils';
 
 export const create = async (req, res) => {
@@ -27,7 +26,17 @@ export const create = async (req, res) => {
   };
 
   const document = {
-    data: {data},
+    data: {
+      data: {
+        ...data,
+        date: new Date(date).toLocaleDateString('en-NG', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+          weekday: 'long',
+        }),
+      },
+    },
     html: fs.readFileSync(
       path.join(__dirname, '../../ticket/template.html'),
       'utf-8'
@@ -43,7 +52,7 @@ export const create = async (req, res) => {
     message: 'booking made successfully',
     data: {
       booking,
-      pdf: secrets.domain + `/ticket/rahony-ticket-${ticket}.pdf`,
+      pdfpath: `/ticket/rahony-ticket-${ticket}.pdf`,
     },
   });
 };
