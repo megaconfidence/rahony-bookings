@@ -67,8 +67,7 @@ export const getAll = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  const {id} = req.params;
-  const {status} = req.body;
+  const {status, id} = req.body;
 
   const booking = await Booking.findByIdAndUpdate(id, {status}, {new: true});
 

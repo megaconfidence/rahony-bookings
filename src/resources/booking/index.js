@@ -13,6 +13,9 @@ router
 router
   .route('/search')
   .post(protect, routes.booking.search, routeCatch(search));
-router.route('/:id').post(protect, routes.booking.update, routeCatch(update));
+
+router
+  .route('/update')
+  .post(protect, routes.booking.update, routeCatch(update));
 
 export const bookingRouter = router;
