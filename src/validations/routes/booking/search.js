@@ -7,6 +7,7 @@ const schema = {
   body: Joi.object({
     date: Joi.date(),
     ticket: Joi.string(),
+    email: Joi.string().required().email(),
     phone: Joi.string().phoneNumber({format: 'e164', strict: true}),
   }),
 };

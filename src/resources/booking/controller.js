@@ -5,16 +5,29 @@ import pdf from 'pdf-creator-node';
 import {genTicket} from '../../utils';
 
 export const create = async (req, res) => {
-  const {departure, name, destination, date, seats, phone} = req.body;
+  const {
+    departure,
+    name,
+    destination,
+    date,
+    seats,
+    phone,
+    email,
+    tnxRef,
+    tnxStatus,
+  } = req.body;
 
   const ticket = genTicket();
 
   const data = {
     date,
+    email,
     name,
     seats,
     phone,
     ticket,
+    tnxRef,
+    tnxStatus,
     departure,
     destination,
   };
@@ -23,6 +36,11 @@ export const create = async (req, res) => {
     format: 'A3',
     border: '10mm',
     orientation: 'portrait',
+    childProcessOptions: {
+      env: {
+        OPENSSL_CONF: '/dev/null',
+      },
+    },
   };
 
   const document = {

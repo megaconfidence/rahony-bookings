@@ -33,6 +33,18 @@ const Booking = mongoose.Schema(
       type: String,
       required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
+    tnxStatus: {
+      type: String,
+      required: true,
+    },
+    tnxRef: {
+      type: String,
+      required: true,
+    },
     seats: {
       type: Number,
       required: true,
