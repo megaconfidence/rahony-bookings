@@ -2,7 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import Booking from './model';
 import pdf from 'pdf-creator-node';
-import {genTicket} from '../../utils';
+import { genTicket } from '../../utils';
+import { secrets } from '../../config';
+import * as postmark from 'postmark';
 
 export const create = async (req, res) => {
   const {
@@ -62,9 +64,24 @@ export const create = async (req, res) => {
     path: path.join(__dirname, `../../ticket/rahony-ticket-${ticket}.pdf`),
   };
 
-  await pdf.create(document, options);
-
+  const pdfPath = await pdf.create(document, options);
   const booking = await Booking.create(data);
+
+  const client = new postmark.ServerClient(secrets.postmarkToken);
+
+  client.sendEmail({
+    From: 'hello@rahonytravels.com',
+    To: email,
+    Subject: `Travel Ticket #${ticket}`,
+    TextBody: `Hello ${name}, \nPlease find attached your travel ticket`,
+    Attachments: [
+      {
+        Name: `rahony-ticket-${ticket}.pdf`,
+        ContentType: 'application/pdf',
+        Content: fs.readFileSync(pdfPath.filename, 'base64'),
+      },
+    ],
+  });
 
   return res.send({
     message: 'booking made successfully',
@@ -80,31 +97,31 @@ export const getAll = async (req, res) => {
 
   return res.send({
     message: 'found all bookings successfully',
-    data: {bookings},
+    data: { bookings },
   });
 };
 
 export const update = async (req, res) => {
-  const {status, id} = req.body;
+  const { status, id } = req.body;
 
-  const booking = await Booking.findByIdAndUpdate(id, {status}, {new: true});
+  const booking = await Booking.findByIdAndUpdate(id, { status }, { new: true });
 
   return res.send({
     message: 'booking updated successfully',
-    data: {booking},
+    data: { booking },
   });
 };
 
 export const search = async (req, res) => {
-  const {phone = '', date = '', ticket = ''} = req.body;
+  const { phone = '', date = '', ticket = '' } = req.body;
   const rgx = (pattern) => new RegExp(`.*${pattern}.*`, 'i');
 
   const bookings = await Booking.find({
-    $or: [{date: rgx(date)}, {phone: rgx(phone)}, {ticket: rgx(ticket)}],
+    $or: [{ date: rgx(date) }, { phone: rgx(phone) }, { ticket: rgx(ticket) }],
   });
 
   return res.send({
     message: 'bookings found successfully',
-    data: {bookings},
+    data: { bookings },
   });
 };
