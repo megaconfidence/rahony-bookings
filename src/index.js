@@ -17,6 +17,9 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 
+app.get('/', (_, res) => {
+  res.send({ok: true});
+});
 app.use('/ticket', express.static(path.join(__dirname, 'ticket')));
 app.use('/auth', authRouter);
 app.use('/api/booking', bookingRouter);
