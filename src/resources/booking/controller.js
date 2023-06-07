@@ -2,11 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import Booking from './model';
 import pdf from 'pdf-creator-node';
-import { genTicket } from '../../utils';
-import { secrets } from '../../config';
+import {genTicket} from '../../utils';
+import {secrets} from '../../config';
 import * as postmark from 'postmark';
 
 export const create = async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   const {
     departure,
     name,
@@ -97,31 +98,31 @@ export const getAll = async (req, res) => {
 
   return res.send({
     message: 'found all bookings successfully',
-    data: { bookings },
+    data: {bookings},
   });
 };
 
 export const update = async (req, res) => {
-  const { status, id } = req.body;
+  const {status, id} = req.body;
 
-  const booking = await Booking.findByIdAndUpdate(id, { status }, { new: true });
+  const booking = await Booking.findByIdAndUpdate(id, {status}, {new: true});
 
   return res.send({
     message: 'booking updated successfully',
-    data: { booking },
+    data: {booking},
   });
 };
 
 export const search = async (req, res) => {
-  const { phone = '', date = '', ticket = '' } = req.body;
+  const {phone = '', date = '', ticket = ''} = req.body;
   const rgx = (pattern) => new RegExp(`.*${pattern}.*`, 'i');
 
   const bookings = await Booking.find({
-    $or: [{ date: rgx(date) }, { phone: rgx(phone) }, { ticket: rgx(ticket) }],
+    $or: [{date: rgx(date)}, {phone: rgx(phone)}, {ticket: rgx(ticket)}],
   });
 
   return res.send({
     message: 'bookings found successfully',
-    data: { bookings },
+    data: {bookings},
   });
 };
