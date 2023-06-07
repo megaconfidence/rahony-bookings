@@ -7,7 +7,6 @@ import {secrets} from '../../config';
 import * as postmark from 'postmark';
 
 export const create = async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const {
     departure,
     name,

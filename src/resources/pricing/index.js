@@ -1,4 +1,5 @@
 import {Router} from 'express';
+// import {routeCatch} from '../../utils';
 import {routes} from '../../validations';
 import {get} from './controller';
 
